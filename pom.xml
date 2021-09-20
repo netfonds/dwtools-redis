@@ -10,55 +10,10 @@
 
   <name>Dropwizard Redis</name>
   <description>Provides easy integration for Dropwizard applications with Redis</description>
-  <url>https://github.com/dropwizard/dropwizard-redis</url>
-
-  <licenses>
-    <license>
-      <name>Apache 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
-
-  <scm>
-    <developerConnection>scm:git:git@github.com:dropwizard/dropwizard-redis.git</developerConnection>
-    <connection>scm:git:https://github.com/dropwizard/dropwizard-redis.git</connection>
-    <url>https://github.com/dropwizard/dropwizard-redis</url>
-    <tag>HEAD</tag>
-  </scm>
-
-  <ciManagement>
-    <system>GitHub Actions</system>
-    <url>https://github.com/dropwizard/dropwizard-redis/actions</url>
-  </ciManagement>
-
-  <issueManagement>
-    <system>GitHub Issues</system>
-    <url>https://github.com/dropwizard/dropwizard-redis/issues</url>
-  </issueManagement>
-
-  <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-    <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-    <site>
-      <id>dropwizard-redis</id>
-      <url>http://dropwizard.github.io/dropwizard-redis/${project.version}</url>
-    </site>
-  </distributionManagement>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-    <sonar.projectKey>dropwizard_dropwizard-redis</sonar.projectKey>
-    <sonar.organization>dropwizard</sonar.organization>
-    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
     <brave.version>5.13.3</brave.version>
     <dropwizard.version>2.0.25</dropwizard.version>
