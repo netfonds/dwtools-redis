@@ -9,7 +9,7 @@
   	<parent>
 		<groupId>de.fundstech.microservices.tools</groupId>
 		<artifactId>dwtools-parent</artifactId>
-		<version>2.0.1-SNAPSHOT</version>
+		<version>2.0.24-SNAPSHOT</version>
 	</parent>
 
   <name>Dropwizard Redis</name>
@@ -22,22 +22,22 @@
 	<jdk.version>11</jdk.version>
 
     <brave.version>5.13.3</brave.version>
-    <dropwizard.version>2.0.1</dropwizard.version>
+    <dropwizard.version>2.0.24</dropwizard.version>
     <lettuce.version>6.1.4.RELEASE</lettuce.version>
     <redis-mock.version>0.1.22</redis-mock.version>
   </properties>
 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>io.dropwizard</groupId>
-        <artifactId>dropwizard-dependencies</artifactId>
-        <version>${dropwizard.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>de.fundstech.microservices.tools</groupId>
+				<artifactId>dwtools-bom</artifactId>
+				<version>${dropwizard.version}-SNAPSHOT</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
   <dependencies>
     <dependency>
@@ -75,6 +75,12 @@
       <groupId>com.github.fppt</groupId>
       <artifactId>jedis-mock</artifactId>
       <version>${redis-mock.version}</version>
+      <exclusions>
+      	<exclusion>
+			<groupId>com.google.guava</groupId>
+      		<artifactId>guava</artifactId>
+      	</exclusion>
+      </exclusions>
       <scope>test</scope>
     </dependency>
     <dependency>
