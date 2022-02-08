@@ -16,11 +16,6 @@ public class TestApplication extends Application<TestConfiguration> {
         public RedisClientFactory<String, String> getRedisClientFactory(final TestConfiguration configuration) {
             return configuration.getRedisClientFactory();
         }
-
-		@Override
-		public int getRedisClientCount(TestConfiguration configuration) {
-			return 1;
-		}
     };
 
     @Override

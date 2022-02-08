@@ -17,6 +17,8 @@ import java.util.List;
 public abstract class RedisClientBundle <K, V, T extends Configuration> implements ConfiguredBundle<T> {
     @Nullable
     private List<StatefulRedisConnection<K, V>> connections = new ArrayList<>();
+    
+    private int clientCount = 1;
 
     @Override
     public void initialize(final Bootstrap<?> bootstrap) {
@@ -26,7 +28,6 @@ public abstract class RedisClientBundle <K, V, T extends Configuration> implemen
     @Override
     public void run(final T configuration, final Environment environment) throws Exception {
         final RedisClientFactory<K, V> redisClientFactory = requireNonNull(getRedisClientFactory(configuration));
-        final int clientCount = getRedisClientCount(configuration);
 
         final Tracing tracing = Tracing.current();
 
@@ -40,7 +41,14 @@ public abstract class RedisClientBundle <K, V, T extends Configuration> implemen
     }
 
     public abstract RedisClientFactory<K, V> getRedisClientFactory(T configuration);
-    public abstract int getRedisClientCount(T configuration);
+    
+    public int getClientCount() {
+		return clientCount;
+	}
+    
+    public void setClientCount(int count) {
+    	clientCount = count;
+    }
 
     public List<StatefulRedisConnection<K, V>> getConnections() {
    		return requireNonNull(connections);
