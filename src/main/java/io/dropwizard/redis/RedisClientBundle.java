@@ -18,7 +18,7 @@ public abstract class RedisClientBundle <K, V, T extends Configuration> implemen
     @Nullable
     private List<StatefulRedisConnection<K, V>> connections = new ArrayList<>();
     
-    private int databaseCount = 1;
+    protected int databaseCount = 1;
 
     @Override
     public void initialize(final Bootstrap<?> bootstrap) {
@@ -46,10 +46,6 @@ public abstract class RedisClientBundle <K, V, T extends Configuration> implemen
 		return databaseCount;
 	}
     
-    public void setDatabaseCount(int count) {
-    	databaseCount = count;
-    }
-
     public List<StatefulRedisConnection<K, V>> getConnections() {
    		return requireNonNull(connections);
     }
