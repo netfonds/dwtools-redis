@@ -47,7 +47,7 @@ public class RedisModeURIFactoryTest {
         assertThat(redisModeURIFactory.isVerifyPeer())
                 .isTrue();
 
-        assertThat(factory.build())
+        assertThat(factory.build(0))
                 .isInstanceOf(RedisURI.class);
     }
 

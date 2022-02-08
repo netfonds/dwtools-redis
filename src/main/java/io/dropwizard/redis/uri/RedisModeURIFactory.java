@@ -57,10 +57,11 @@ public class RedisModeURIFactory extends RedisURIFactory {
     }
 
     @Override
-    public RedisURI build() {
+    public RedisURI build(final int db) {
         final RedisURI.Builder builder = RedisURI.builder()
                 .withHost(node.getHost())
                 .withPort(node.getPort())
+                .withDatabase(db)
                 .withSsl(ssl)
                 .withStartTls(startTls)
                 .withVerifyPeer(verifyPeer)

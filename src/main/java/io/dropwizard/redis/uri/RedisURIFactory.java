@@ -55,5 +55,5 @@ public abstract class RedisURIFactory implements Discoverable {
         this.password = password;
     }
 
-    public abstract RedisURI build();
+    public abstract RedisURI build(final int db);
 }

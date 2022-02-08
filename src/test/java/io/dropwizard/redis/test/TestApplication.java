@@ -1,6 +1,7 @@
 package io.dropwizard.redis.test;
 
 import io.dropwizard.Application;
+import io.dropwizard.Configuration;
 import io.dropwizard.redis.RedisClientBundle;
 import io.dropwizard.redis.RedisClientFactory;
 import io.dropwizard.setup.Bootstrap;
@@ -15,6 +16,11 @@ public class TestApplication extends Application<TestConfiguration> {
         public RedisClientFactory<String, String> getRedisClientFactory(final TestConfiguration configuration) {
             return configuration.getRedisClientFactory();
         }
+
+		@Override
+		public int getRedisClientCount(TestConfiguration configuration) {
+			return 1;
+		}
     };
 
     @Override
