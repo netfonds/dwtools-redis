@@ -32,9 +32,6 @@ public class RedisClientFactory<K, V> extends AbstractRedisClientFactory<K, V> {
     @JsonProperty
     private ClientOptionsFactory clientOptions = new ClientOptionsFactory();
     
-    @JsonProperty
-    private int countDatabases = 1;
-
     @Override
     public StatefulRedisConnection<K, V> build(final HealthCheckRegistry healthChecks, final LifecycleEnvironment lifecycle,
                                                final MetricRegistry metrics) {

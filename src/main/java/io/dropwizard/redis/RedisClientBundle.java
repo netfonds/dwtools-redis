@@ -18,7 +18,7 @@ public abstract class RedisClientBundle <K, V, T extends Configuration> implemen
     @Nullable
     private List<StatefulRedisConnection<K, V>> connections = new ArrayList<>();
     
-    private int clientCount = 1;
+    private int databaseCount = 1;
 
     @Override
     public void initialize(final Bootstrap<?> bootstrap) {
@@ -31,7 +31,7 @@ public abstract class RedisClientBundle <K, V, T extends Configuration> implemen
 
         final Tracing tracing = Tracing.current();
 
-        for (int i = 0; i < clientCount; i++)
+        for (int i = 0; i < databaseCount; i++)
         	this.connections.add(redisClientFactory.build(
         			environment.healthChecks(), 
         			environment.lifecycle(), 
@@ -42,12 +42,12 @@ public abstract class RedisClientBundle <K, V, T extends Configuration> implemen
 
     public abstract RedisClientFactory<K, V> getRedisClientFactory(T configuration);
     
-    public int getClientCount() {
-		return clientCount;
+    public int getDatabaseCount() {
+		return databaseCount;
 	}
     
-    public void setClientCount(int count) {
-    	clientCount = count;
+    public void setDatabaseCount(int count) {
+    	databaseCount = count;
     }
 
     public List<StatefulRedisConnection<K, V>> getConnections() {
