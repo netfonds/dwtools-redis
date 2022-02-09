@@ -56,4 +56,6 @@ public abstract class RedisURIFactory implements Discoverable {
     }
 
     public abstract RedisURI build();
+    
+    public abstract RedisURI build(final int db);
 }

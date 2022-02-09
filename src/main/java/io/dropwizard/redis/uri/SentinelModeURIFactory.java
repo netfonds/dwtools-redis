@@ -39,7 +39,13 @@ public class SentinelModeURIFactory extends RedisURIFactory {
 
     @Override
     public RedisURI build() {
+    	return build(0);
+    }
+    
+    @Override
+    public RedisURI build(final int db) {
         final RedisURI.Builder builder = RedisURI.builder()
+        		.withDatabase(db)
                 .withTimeout(java.time.Duration.ofSeconds(timeout.toSeconds()));
 
         sentinels.forEach(sentinel -> builder.withSentinel(sentinel.getHost(), sentinel.getPort()));

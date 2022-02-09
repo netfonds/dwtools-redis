@@ -45,7 +45,7 @@ public class SentinelModeURIFactoryTest {
         assertThat(sentinelModeURIFactory.getSentinelMasterId())
                 .isEqualTo("abc");
 
-        assertThat(factory.build())
+        assertThat(factory.build(0))
                 .isInstanceOf(RedisURI.class);
     }
 

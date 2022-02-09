@@ -31,7 +31,7 @@ public class RedisClientFactory<K, V> extends AbstractRedisClientFactory<K, V> {
     @NotNull
     @JsonProperty
     private ClientOptionsFactory clientOptions = new ClientOptionsFactory();
-
+    
     @Override
     public StatefulRedisConnection<K, V> build(final HealthCheckRegistry healthChecks, final LifecycleEnvironment lifecycle,
                                                final MetricRegistry metrics) {
@@ -41,7 +41,12 @@ public class RedisClientFactory<K, V> extends AbstractRedisClientFactory<K, V> {
     @Override
     public StatefulRedisConnection<K, V> build(final HealthCheckRegistry healthChecks, final LifecycleEnvironment lifecycle,
                                                final MetricRegistry metrics, final Tracing tracing) {
-        final RedisURI uri = node.build();
+    	return build(healthChecks, lifecycle, metrics, tracing, 0);
+    }
+    
+    public StatefulRedisConnection<K, V> build(final HealthCheckRegistry healthChecks, final LifecycleEnvironment lifecycle,
+    										   final MetricRegistry metrics, final Tracing tracing, final int db) {
+        final RedisURI uri = node.build(db);
 
         final ClientResources resources = clientResources.build(name, metrics, tracing);
 
@@ -54,10 +59,10 @@ public class RedisClientFactory<K, V> extends AbstractRedisClientFactory<K, V> {
         final StatefulRedisConnection<K, V> connection = redisClient.connect(codec);
 
         // manage client and connection
-        lifecycle.manage(new RedisClientManager<K, V>(redisClient, connection, name));
+        lifecycle.manage(new RedisClientManager<K, V>(redisClient, connection, String.format("%s_%s", name, db)));
 
         // health check
-        healthChecks.register(name, new RedisHealthCheck(() -> connection.sync().ping()));
+        healthChecks.register(String.format("%s_%s", name, db), new RedisHealthCheck(() -> connection.sync().ping()));
 
         // metrics (latency and other connection events) integration
         redisClient.getResources()
