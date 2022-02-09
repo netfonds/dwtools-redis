@@ -81,11 +81,11 @@ public abstract class AbstractRedisClientFactory<K, V> implements Discoverable {
 
     public StatefulConnection<K, V> build(final HealthCheckRegistry healthChecks, final LifecycleEnvironment lifecycle,
                                           final MetricRegistry metrics) {
-        return build(healthChecks, lifecycle, metrics, null, 0);
+        return build(healthChecks, lifecycle, metrics, null);
     }
 
     public abstract StatefulConnection<K, V> build(final HealthCheckRegistry healthChecks, final LifecycleEnvironment lifecycle,
-                                                   final MetricRegistry metrics, @Nullable final Tracing tracing, final int db);
+                                                   final MetricRegistry metrics, @Nullable final Tracing tracing);
 
     protected List<EventVisitor> buildEventVisitors(final MetricRegistry metrics) {
         // Extract this, and the event wrapper builders, to Dropwizard factories, if more event types are added frequently enough?

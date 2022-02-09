@@ -35,12 +35,17 @@ public class RedisClientFactory<K, V> extends AbstractRedisClientFactory<K, V> {
     @Override
     public StatefulRedisConnection<K, V> build(final HealthCheckRegistry healthChecks, final LifecycleEnvironment lifecycle,
                                                final MetricRegistry metrics) {
-        return build(healthChecks, lifecycle, metrics, null, 0);
+        return build(healthChecks, lifecycle, metrics, null);
     }
 
     @Override
     public StatefulRedisConnection<K, V> build(final HealthCheckRegistry healthChecks, final LifecycleEnvironment lifecycle,
-                                               final MetricRegistry metrics, final Tracing tracing, final int db) {
+                                               final MetricRegistry metrics, final Tracing tracing) {
+    	return build(healthChecks, lifecycle, metrics, tracing, 0);
+    }
+    
+    public StatefulRedisConnection<K, V> build(final HealthCheckRegistry healthChecks, final LifecycleEnvironment lifecycle,
+    										   final MetricRegistry metrics, final Tracing tracing, final int db) {
         final RedisURI uri = node.build(db);
 
         final ClientResources resources = clientResources.build(name, metrics, tracing);

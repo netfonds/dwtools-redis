@@ -27,7 +27,7 @@ public abstract class RedisClusterClientBundle<K, V, T extends Configuration> im
         final Tracing tracing = Tracing.current();
 
         this.clusterConnection = redisClusterClientFactory.build(environment.healthChecks(), environment.lifecycle(), environment.metrics(),
-                tracing, 0);
+                tracing);
     }
 
     public abstract RedisClusterClientFactory<K, V> getRedisClusterClientFactory(T configuration);
