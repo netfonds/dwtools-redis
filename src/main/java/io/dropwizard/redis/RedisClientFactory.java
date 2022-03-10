@@ -38,33 +38,38 @@ public class RedisClientFactory<K, V> extends AbstractRedisClientFactory<K, V> {
         return build(healthChecks, lifecycle, metrics, null);
     }
 
-    @Override
     public StatefulRedisConnection<K, V> build(final HealthCheckRegistry healthChecks, final LifecycleEnvironment lifecycle,
                                                final MetricRegistry metrics, final Tracing tracing) {
-        final RedisURI uri = node.build();
-
-        final ClientResources resources = clientResources.build(name, metrics, tracing);
-
-        final RedisClient redisClient = RedisClient.create(resources, uri);
-
-        redisClient.setOptions(clientOptions.build());
-
-        final RedisCodec<K, V> codec = redisCodec.build();
-
-        final StatefulRedisConnection<K, V> connection = redisClient.connect(codec);
-
-        // manage client and connection
-        lifecycle.manage(new RedisClientManager<K, V>(redisClient, connection, name));
-
-        // health check
-        healthChecks.register(name, new RedisHealthCheck(() -> connection.sync().ping()));
-
-        // metrics (latency and other connection events) integration
-        redisClient.getResources()
-                .eventBus()
-                .get()
-                .subscribe(new LettuceMetricsSubscriber(buildEventVisitors(metrics)));
-
-        return connection;
+       return build(healthChecks, lifecycle, metrics, tracing, 0);
     }
+    
+    @Override
+	public StatefulRedisConnection<K, V> build(final HealthCheckRegistry healthChecks,
+			final LifecycleEnvironment lifecycle, final MetricRegistry metrics, final Tracing tracing, final int db) {
+		final RedisURI uri = node.build(db);
+
+		String environmentName = name + "-" + db;
+		
+		final ClientResources resources = clientResources.build(environmentName, metrics, tracing);
+
+		final RedisClient redisClient = RedisClient.create(resources, uri);
+
+		redisClient.setOptions(clientOptions.build());
+
+		final RedisCodec<K, V> codec = redisCodec.build();
+
+		final StatefulRedisConnection<K, V> connection = redisClient.connect(codec);
+
+		// 	manage client and connection
+		lifecycle.manage(new RedisClientManager<K, V>(redisClient, connection, environmentName));
+
+		// health check
+		healthChecks.register(environmentName, new RedisHealthCheck(() -> connection.sync().ping()));
+
+		// 	metrics (latency and other connection events) integration
+		redisClient.getResources().eventBus().get()
+				.subscribe(new LettuceMetricsSubscriber(buildEventVisitors(metrics)));
+
+		return connection;
+	}
 }

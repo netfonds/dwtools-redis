@@ -55,12 +55,13 @@ public class RedisModeURIFactory extends RedisURIFactory {
     public void setVerifyPeer(final boolean verifyPeer) {
         this.verifyPeer = verifyPeer;
     }
-
+    
     @Override
-    public RedisURI build() {
+    public RedisURI build(final int database) {
         final RedisURI.Builder builder = RedisURI.builder()
                 .withHost(node.getHost())
                 .withPort(node.getPort())
+                .withDatabase(database)
                 .withSsl(ssl)
                 .withStartTls(startTls)
                 .withVerifyPeer(verifyPeer)

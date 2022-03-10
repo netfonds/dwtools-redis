@@ -58,8 +58,14 @@ public class RedisClusterClientFactory<K, V> extends AbstractRedisClientFactory<
     @Override
     public StatefulRedisClusterConnection<K, V> build(final HealthCheckRegistry healthChecks, final LifecycleEnvironment lifecycle,
                                                       final MetricRegistry metrics, @Nullable final Tracing tracing) {
+    	return build(healthChecks, lifecycle, metrics, tracing, 0);
+    }
+    
+    @Override
+    public StatefulRedisClusterConnection<K, V> build(final HealthCheckRegistry healthChecks, final LifecycleEnvironment lifecycle,
+                                                      final MetricRegistry metrics, @Nullable final Tracing tracing, int database) {
         final List<RedisURI> uris = nodes.stream()
-                .map(RedisURIFactory::build)
+                .map(n->n.build(database))
                 .collect(Collectors.toList());
 
         final ClientResources resources = clientResources.build(name, metrics, tracing);

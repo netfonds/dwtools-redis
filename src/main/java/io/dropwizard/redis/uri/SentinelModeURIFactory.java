@@ -38,7 +38,7 @@ public class SentinelModeURIFactory extends RedisURIFactory {
     }
 
     @Override
-    public RedisURI build() {
+    public RedisURI build(final int database) {
         final RedisURI.Builder builder = RedisURI.builder()
                 .withTimeout(java.time.Duration.ofSeconds(timeout.toSeconds()));
 
@@ -47,6 +47,8 @@ public class SentinelModeURIFactory extends RedisURIFactory {
         if (clientName != null) {
             builder.withClientName(clientName);
         }
+        
+        builder.withDatabase(database);
 
         if(username != null && password != null) {
         	builder.withAuthentication(username, password);
@@ -60,4 +62,5 @@ public class SentinelModeURIFactory extends RedisURIFactory {
 
         return builder.build();
     }
+    
 }
