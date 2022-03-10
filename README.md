@@ -1,3 +1,6 @@
+Alte Projekt. Nicht mehr nutzen bitte.
+Neues Projekt ist dwtools-redis-client
+
 # dropwizard-redis
 
 Provides easy integration for Dropwizard applications with Redis via the Lettuce library.
